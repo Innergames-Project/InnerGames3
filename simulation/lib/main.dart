@@ -45,7 +45,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           padding: const EdgeInsets.only(left: 24),
           child: IconButton(
             icon: Icon(Icons.arrow_back),
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              if (Navigator.canPop(context)) {
+                Navigator.pop(context);
+              }
+            },
           ),
         )
       : null,
@@ -133,7 +137,7 @@ class _QuizScreenState extends State<QuizScreen> {
     if (currentQuestion < questions.length - 1) {
       setState(() => currentQuestion++);
     } else {
-      Navigator.pushReplacement(
+      Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ResultScreen(answers: answers),
@@ -338,19 +342,109 @@ class ResultScreen extends StatelessWidget {
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.transparent,
       appBar: CustomAppBar(
-        title: 'Resultaten',
+        title: '',
         showBack: true,
       ),
       body: buildBackground(
         child: SafeArea(
-          child: ListView.builder(
-            itemCount: answers.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text('Vraag ${index + 1}'),
-                subtitle: Text('Antwoord: ${answers[index] ?? "Geen"}'),
-              );
-            },
+          bottom: false,
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.95),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Column(
+              children: [
+                Text(
+                  'Simulation complete',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w800,
+                    color: Color(0xFFE82B91),
+                  ),
+                ),
+                SizedBox(height: 20),
+
+                Text(
+                  "Congratulations on completing the case simulation. Review your journey below.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.grey[600]),
+                ),
+
+                SizedBox(height: 20),
+
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: answers.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text('Question ${index + 1}'),
+                        subtitle: Text('Answer: ${answers[index] ?? "None"}'),
+                      );
+                    },
+                  ),
+                ),
+
+                SizedBox(height: 16),
+
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFFE82B91),
+                      foregroundColor: Colors.white,
+                      elevation: 6,
+                      shadowColor: Colors.black.withOpacity(0.7),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => QuizScreen()),
+                        (route) => false,
+                      );
+                    },
+                    child: Text(
+                      'Play again',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+
+                SizedBox(height: 12),
+
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Color(0xFFE82B91),
+                      side: BorderSide(color: Color(0xFFE82B91)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      'Dashboard',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
