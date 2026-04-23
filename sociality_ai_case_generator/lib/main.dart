@@ -161,7 +161,7 @@ class _CaseGeneratorHomePageState extends State<CaseGeneratorHomePage> {
   }
 
   Future<void> _pickFiles() async {
-    final result = await FilePicker.platform.pickFiles(
+    final result = await FilePicker.pickFiles(
       allowMultiple: true,
       type: FileType.any,
     );
