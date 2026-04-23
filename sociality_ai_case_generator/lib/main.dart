@@ -4,6 +4,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'simulation.dart';
+
 void main() {
   runApp(const CaseGeneratorApp());
 }
@@ -954,29 +956,37 @@ class CaseSimulationPage extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 20),
-                          SizedBox(
-                            width: double.infinity,
-                            height: 64,
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFFE02D91),
-                                foregroundColor: Colors.white,
-                                elevation: 5,
-                                shadowColor: const Color(0x55000000),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                              ),
-                              child: const Text(
-                                'Start case simulation',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ),
+
+
+SizedBox(
+  width: double.infinity,
+  height: 64,
+  child: ElevatedButton(
+    onPressed: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => StartScreen()),
+      );
+    },
+    style: ElevatedButton.styleFrom(
+      backgroundColor: const Color(0xFFE02D91),
+      foregroundColor: Colors.white,
+      elevation: 5,
+      shadowColor: const Color(0x55000000),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+    ),
+    child: const Text(
+      'Start case simulation',
+      style: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+  ),
+),
+
                           const SizedBox(height: 18),
                           SizedBox(
                             width: double.infinity,

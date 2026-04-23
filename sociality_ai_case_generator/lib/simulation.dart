@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'main.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -17,7 +19,7 @@ Widget buildBackground({required Widget child}) {
   return Container(
     decoration: BoxDecoration(
       image: DecorationImage(
-        image: AssetImage('assets/app_bg.png'),
+        image: AssetImage('assets/images/app-background.png'),
         fit: BoxFit.cover,
       ),
     ),
@@ -459,7 +461,7 @@ class ResultScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SecondScreen()),
+                        MaterialPageRoute(builder: (context) => DownloadSuccessPage()),
                       );
                     },
                     child: Text(
