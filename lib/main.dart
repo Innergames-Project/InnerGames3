@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'second.dart';
 
 void main() {
   runApp(MyApp());
@@ -433,7 +434,12 @@ class ResultScreen extends StatelessWidget {
                       ),
                       padding: EdgeInsets.symmetric(vertical: 14),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SecondScreen()),
+                      );
+                    },
                     child: Text(
                       'Dashboard',
                       style: TextStyle(
