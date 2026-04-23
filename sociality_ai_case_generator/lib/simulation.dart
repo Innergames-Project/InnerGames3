@@ -461,7 +461,7 @@ class ResultScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => DownloadSuccessPage()),
+                        MaterialPageRoute(builder: (context) => const CaseSimulationPage()),
                       );
                     },
                     child: Text(

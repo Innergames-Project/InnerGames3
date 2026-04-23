@@ -210,7 +210,7 @@ class _CaseGeneratorHomePageState extends State<CaseGeneratorHomePage> {
 
     await Navigator.of(
       context,
-    ).push(MaterialPageRoute<void>(builder: (_) => const StartScreen()));
+    ).push(MaterialPageRoute<void>(builder: (_) => const CaseSimulationPage()));
   }
 
   @override
@@ -1236,9 +1236,12 @@ class DownloadSuccessPage extends StatelessWidget {
                                 height: 66,
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    Navigator.of(
-                                      context,
-                                    ).popUntil((route) => route.isFirst);
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute<void>(
+                                        builder: (_) =>
+                                            const CaseSimulationPage(),
+                                      ),
+                                    );
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: const Color(0xFFE02D91),
