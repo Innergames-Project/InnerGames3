@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:sociality_ai_case_generator/main.dart';
+import 'package:sociality_ai_case_generator/Test-pages/main.dart';
 
 void main() {
   testWidgets('home screen shows case generator UI', (WidgetTester tester) async {
