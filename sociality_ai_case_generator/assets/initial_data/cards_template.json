@@ -1,0 +1,82 @@
+{
+  "case_name": "Crisis Intervention: The Janssen Case",
+  "total_cards": 24,
+  "cards": [
+    { "id": "1A", "step": 1, "text": "Report of a child left alone. Parents are unreachable. First step?", "choices": [
+      { "text": "Contact emergency family network.", "next_id": "2A", "interventions": [1, 2] },
+      { "text": "Wait at the house for parents to return.", "next_id": "2B", "interventions": [3] },
+      { "text": "Call the police immediately.", "next_id": "2C", "interventions": [] }
+    ]},
+    { "id": "2A", "step": 2, "text": "Grandparents take the child. Mother arrives later, highly distressed.", "choices": [
+      { "text": "Calm her and assess the home situation.", "next_id": "3A", "interventions": [4, 5] },
+      { "text": "Strictly inform her of the legal consequences.", "next_id": "3B", "interventions": [] }
+    ]},
+    { "id": "2B", "step": 2, "text": "Mother arrives 3 hours later. She claims she had a work emergency.", "choices": [
+      { "text": "Validate her stress but set a safety plan.", "next_id": "3A", "interventions": [1] },
+      { "text": "Report her to the child protection registry.", "next_id": "3C", "interventions": [6] }
+    ]},
+    { "id": "2C", "step": 2, "text": "Police arrive. The neighborhood is watching. The mother is arrested.", "choices": [
+      { "text": "Try to mitigate the trauma for the child.", "next_id": "3C", "interventions": [2] },
+      { "text": "Let the legal system take over.", "next_id": "4G", "interventions": [] }
+    ]},
+    { "id": "3A", "step": 3, "text": "Mother admits she is overwhelmed and has no childcare support.", "choices": [
+      { "text": "Arrange professional daycare and coaching.", "next_id": "4A", "interventions": [3, 6, 7] },
+      { "text": "Suggest she finds a cheaper apartment.", "next_id": "4B", "interventions": [] }
+    ]},
+    { "id": "3B", "step": 3, "text": "Mother becomes defensive and refuses to cooperate with the plan.", "choices": [
+      { "text": "Bring in a neutral family mediator.", "next_id": "4B", "interventions": [4] },
+      { "text": "Threaten her with child removal.", "next_id": "4D", "interventions": [] }
+    ]},
+    { "id": "3C", "step": 3, "text": "The child is in foster care. You must decide on a visitation plan.", "choices": [
+      { "text": "Structured, supervised weekly visits.", "next_id": "4C", "interventions": [5] },
+      { "text": "Wait for a court order.", "next_id": "4H", "interventions": [] }
+    ]},
+    { "id": "4A", "step": 4, "text": "Daycare is working. Mother is attending sessions regularly.", "choices": [
+      { "text": "Finalize a long-term sustainability plan.", "next_id": "5A", "interventions": [8] },
+      { "text": "Reduce supervision immediately.", "next_id": "5B", "interventions": [] }
+    ]},
+    { "id": "4B", "step": 4, "text": "Progress is slow. The mother misses a counseling session.", "choices": [
+      { "text": "Home visit to investigate the barrier.", "next_id": "5B", "interventions": [3] },
+      { "text": "Issue a formal strike/warning.", "next_id": "5C", "interventions": [] }
+    ]},
+    { "id": "4C", "step": 4, "text": "Visits are emotional. The child wants to go home.", "choices": [
+      { "text": "Start a phased reunification process.", "next_id": "5B", "interventions": [7] },
+      { "text": "Maintain foster care for now.", "next_id": "5D", "interventions": [] }
+    ]},
+    { "id": "4D", "step": 4, "text": "Mother disappears. The child is distraught. Case is stalling.", "choices": [
+      { "text": "Intensive search and police report.", "next_id": "5D", "interventions": [] }
+    ]},
+    { "id": "4G", "step": 4, "text": "LOSS: Trust is destroyed. The family has moved into a high-conflict legal battle.", "is_terminal": true, "result": "Loss" },
+    { "id": "4H", "step": 4, "text": "LOSS: Administrative delay caused the child to stay in foster care too long. Bonding failed.", "is_terminal": true, "result": "Loss" },
+    { "id": "5A", "step": 5, "text": "The family is thriving. The social network is now fully supportive.", "choices": [
+      { "text": "Hand over the case to community care.", "next_id": "6A", "interventions": [3] }
+    ]},
+    { "id": "5B", "step": 5, "text": "Stability reached, but the family still relies heavily on you.", "choices": [
+      { "text": "Push for independence.", "next_id": "6A", "interventions": [] }
+    ]},
+    { "id": "5C", "step": 5, "text": "Mother is angry about the warning. Cooperation has ceased.", "choices": [
+      { "text": "Attempt a final reconciliation talk.", "next_id": "6A", "interventions": [1] },
+      { "text": "Escalate to permanent removal.", "next_id": "5F", "interventions": [] }
+    ]},
+    { "id": "5D", "step": 5, "text": "Reunification failed. The child remains in the system.", "choices": [
+      { "text": "Finalize long-term foster plan.", "next_id": "6A", "interventions": [] }
+    ]},
+    { "id": "5F", "step": 5, "text": "LOSS: Ethical breach. Your intervention caused more harm than the original situation.", "is_terminal": true, "result": "Loss" },
+    { "id": "6A", "step": 6, "text": "CASE CLOSED: Final review of professional choices and social impact.", "is_terminal": true, "result": "Success" },
+    { "id": "1B", "step": 1, "text": "Alt Start: You receive a call from a school counselor regarding the child.", "choices": [
+      { "text": "Schedule a meeting with school first.", "next_id": "2A", "interventions": [8] }
+    ]},
+    { "id": "1C", "step": 1, "text": "Alt Start: The mother calls you herself asking for help.", "choices": [
+      { "text": "Offer immediate phone support.", "next_id": "2B", "interventions": [4] }
+    ]},
+    { "id": "2D", "step": 2, "text": "The child refuses to speak to anyone and hides under a bed.", "choices": [
+      { "text": "Use a specialized child therapist.", "next_id": "3A", "interventions": [2, 5] }
+    ]},
+    { "id": "3D", "step": 3, "text": "Bureaucratic delay: The funding for daycare is pending.", "choices": [
+      { "text": "Use emergency discretionary funds.", "next_id": "4A", "interventions": [7] }
+    ]},
+    { "id": "4E", "step": 4, "text": "A relative comes forward offering to help full-time.", "choices": [
+      { "text": "Vet the relative and initiate transfer.", "next_id": "5A", "interventions": [1] }
+    ]}
+  ]
+}

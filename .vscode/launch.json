@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "sociality_ai_case_generator",
+            "cwd": "sociality_ai_case_generator",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "sociality_ai_case_generator (profile mode)",
+            "cwd": "sociality_ai_case_generator",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "sociality_ai_case_generator (release mode)",
+            "cwd": "sociality_ai_case_generator",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

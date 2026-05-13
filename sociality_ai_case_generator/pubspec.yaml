@@ -69,6 +69,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icon/
+    - assets/initial_data/
 
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/to/asset-from-package
