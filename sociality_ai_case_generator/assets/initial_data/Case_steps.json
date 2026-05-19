@@ -1,0 +1,58 @@
+{
+  "phases": [
+    {
+      "name": "Introduction and Context",
+      "description": "Describe the problem or challenge being addressed.",
+      "steps": [
+        { "name": "Problem Analysis", "description": "Describe the problem or challenge being addressed." },
+        { "name": "Goal Setting", "description": "Define clear objectives and desired outcomes." },
+        { "name": "Resource Mapping", "description": "Identify available resources, stakeholders, and constraints." }
+      ]
+    },
+    {
+      "name": "Assessment Phase",
+      "description": "Evaluate the current situation and identify key issues.",
+      "steps": [
+        { "name": "Needs Assessment", "description": "Determine the needs of the target population or system." },
+        { "name": "Risk and Protective Factors", "description": "Identify potential risks and factors that can mitigate them." },
+        { "name": "Baseline Documentation", "description": "Record initial conditions and metrics for future comparison." }
+      ]
+    },
+    {
+      "name": "Analysis and Planning",
+      "description": "Analyze the data and develop a plan for intervention.",
+      "steps": [
+        { "name": "Intervention Strategy", "description": "Develop strategies to address the identified problem." },
+        { "name": "Scenario Branching", "description": "Plan for multiple scenarios and possible outcomes." },
+        { "name": "Success Indicators", "description": "Define measurable indicators of success." }
+      ]
+    },
+    {
+      "name": "Intervention and Implementation",
+      "description": "Execute the planned interventions.",
+      "steps": [
+        { "name": "Action Rollout", "description": "Implement planned actions and interventions." },
+        { "name": "Communication Plan", "description": "Define how updates and information will be shared." },
+        { "name": "Real-Time Adjustments", "description": "Make adjustments during implementation based on feedback and data." }
+      ]
+    },
+    {
+      "name": "Monitoring and Review",
+      "description": "Monitor progress and review outcomes.",
+      "steps": [
+        { "name": "Progress Tracking", "description": "Track progress using predefined metrics and reports." },
+        { "name": "Reflection Methods", "description": "Use reflective practices to evaluate the process." },
+        { "name": "Outcome Review", "description": "Compare results against success indicators to assess effectiveness." }
+      ]
+    },
+    {
+      "name": "Closure and Transition",
+      "description": "Plan for transitioning responsibilities and resources.",
+      "steps": [
+        { "name": "Transition Plan", "description": "Plan for transitioning responsibilities and resources." },
+        { "name": "Sustainability Supports", "description": "Identify supports needed to maintain outcomes over time." },
+        { "name": "Follow-Up Schedule", "description": "Define timelines and methods for post-implementation follow-up." }
+      ]
+    }
+  ]
+}

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import '../widgets/case_RawJsonPopup.dart';
 import '../widgets/case_popup.dart';
 
 class BackendReviewingTestPage extends StatelessWidget {
   const BackendReviewingTestPage({super.key});
 
-  void loadCase(BuildContext context) {
-    CasePopup.showCase(context);
-  }
+  Future<void> loadCase(BuildContext context) async { await RawJsonPopup.show(context); }
 
-  void testCase() {
-    print("Test Case pressed");
+  void testCase(BuildContext context) {
+    CasePopup.showCase(context);
   }
 
   void cardManagement() {
@@ -37,7 +36,7 @@ class BackendReviewingTestPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: testCase,
+              onPressed: () => testCase(context),
               child: const Text('Test Case'),
             ),
             const SizedBox(height: 16),
