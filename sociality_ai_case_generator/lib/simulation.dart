@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
+
+import 'features/case_generator/case_simulation_page.dart';
 
 
 void main() {
@@ -186,7 +187,7 @@ class _QuizScreenState extends State<QuizScreen> {
             height: double.infinity,
             padding: EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.95),
+              color: Colors.white.withValues(alpha: 0.95),
               borderRadius: BorderRadius.circular(16),
             ),
             child: SingleChildScrollView(
@@ -265,7 +266,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         ),
                         decoration: BoxDecoration(
                           color: isSelected
-                              ? Color(0xFFA5B800).withOpacity(0.15)
+                              ? Color(0xFFA5B800).withValues(alpha: 0.15)
                               : Colors.white,
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
@@ -276,7 +277,7 @@ class _QuizScreenState extends State<QuizScreen> {
                               ? []
                               : [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.25),
+                                    color: Colors.black.withValues(alpha: 0.25),
                                     blurRadius: 6,
                                     offset: Offset(0, 3),
                                   ),
@@ -316,7 +317,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         backgroundColor: Color(0xFFE82B91),
                         foregroundColor: Colors.white,
                         elevation: 6,
-                        shadowColor: Colors.black.withOpacity(0.7),
+                        shadowColor: Colors.black.withValues(alpha: 0.7),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -378,7 +379,7 @@ class ResultScreen extends StatelessWidget {
             height: double.infinity,
             padding: EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.95),
+              color: Colors.white.withValues(alpha: 0.95),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Column(
@@ -422,7 +423,7 @@ class ResultScreen extends StatelessWidget {
                       backgroundColor: Color(0xFFE82B91),
                       foregroundColor: Colors.white,
                       elevation: 6,
-                      shadowColor: Colors.black.withOpacity(0.7),
+                      shadowColor: Colors.black.withValues(alpha: 0.7),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -500,7 +501,7 @@ class StartScreen extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 24),
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.95),
+                color: Colors.white.withValues(alpha: 0.95),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
@@ -598,7 +599,7 @@ class StartScreen extends StatelessWidget {
                         backgroundColor: Color(0xFFE82B91),
                         foregroundColor: Colors.white,
                         elevation: 6,
-                        shadowColor: Colors.black.withOpacity(0.7),
+                        shadowColor: Colors.black.withValues(alpha: 0.7),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -635,7 +636,7 @@ Widget buildTag(String text) {
       borderRadius: BorderRadius.circular(12),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.25),
+          color: Colors.black.withValues(alpha: 0.25),
           blurRadius: 6,
           offset: Offset(0, 3),
         ),

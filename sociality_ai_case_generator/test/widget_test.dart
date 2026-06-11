@@ -9,16 +9,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:sociality_ai_case_generator/main.dart';
+import 'package:sociality_ai_case_generator/features/case_generator/language_selector.dart';
 
 void main() {
   testWidgets('home screen shows case generator UI', (WidgetTester tester) async {
     await tester.pumpWidget(const CaseGeneratorApp());
 
-    expect(find.text('Home'), findsOneWidget);
-    expect(find.text('Welcome to the\ncase generator'), findsOneWidget);
-    expect(find.text('Select language'), findsOneWidget);
-    expect(find.text('Nederlands'), findsOneWidget);
-    expect(find.text('Generate case'), findsOneWidget);
+    expect(find.text('Welkom bij de casusgenerator'), findsOneWidget);
+    expect(find.text('Selecteer taal'), findsOneWidget);
+    expect(find.byType(LanguageSelector), findsOneWidget);
+    expect(find.byType(NetherlandsFlag), findsOneWidget);
+    expect(find.text('Genereer casus'), findsOneWidget);
     expect(find.byIcon(Icons.upload), findsOneWidget);
   });
 }
