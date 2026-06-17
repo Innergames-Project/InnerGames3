@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../models/home_copy.dart';
+import '../models/language_scope.dart';
+
 void showHowItWorksOverlay(BuildContext context) {
   showGeneralDialog<void>(
     context: context,
@@ -28,6 +31,7 @@ class _HowItWorksOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final copy = HomeCopy.fromLanguage(LanguageScope.of(context));
     final maxHeight = MediaQuery.of(context).size.height * 0.85;
 
     return Material(
@@ -65,7 +69,7 @@ class _HowItWorksOverlay extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'How it works',
+                                    copy.howItWorksTitle,
                                     style: Theme.of(context)
                                         .textTheme
                                         .displaySmall
@@ -78,7 +82,7 @@ class _HowItWorksOverlay extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 6),
                                   Text(
-                                    'Create engaging case-based learning\ncontent in three simple steps',
+                                    copy.howItWorksSubtitle,
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleLarge
@@ -114,27 +118,24 @@ class _HowItWorksOverlay extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 24),
-                        const _HowItWorksCard(
+                        _HowItWorksCard(
                           number: '1',
-                          title: 'Upload Your Document',
-                          description:
-                              'Upload your case study or educational material in PDF, DOCX, or TXT format. Select your preferred language (Dutch or English).',
+                          title: copy.howItWorksStep1Title,
+                          description: copy.howItWorksStep1Description,
                           icon: Icons.cloud_upload_outlined,
                         ),
                         const SizedBox(height: 12),
-                        const _HowItWorksCard(
+                        _HowItWorksCard(
                           number: '2',
-                          title: 'AI Generates Your Case',
-                          description:
-                              'Our AI analyzes your document and automatically creates structured, game-based learning content following a proven six-step pedagogical model.',
+                          title: copy.howItWorksStep2Title,
+                          description: copy.howItWorksStep2Description,
                           icon: Icons.auto_awesome,
                         ),
                         const SizedBox(height: 12),
-                        const _HowItWorksCard(
+                        _HowItWorksCard(
                           number: '3',
-                          title: 'Review & Download',
-                          description:
-                              'Review the generated content, make any edits you need, and download your case for immediate use in your educational programs.',
+                          title: copy.howItWorksStep3Title,
+                          description: copy.howItWorksStep3Description,
                           icon: Icons.download_outlined,
                         ),
                         const SizedBox(height: 24),
@@ -152,9 +153,9 @@ class _HowItWorksOverlay extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(18),
                               ),
                             ),
-                            child: const Text(
-                              'Got it!',
-                              style: TextStyle(
+                            child: Text(
+                              copy.gotIt,
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                               ),

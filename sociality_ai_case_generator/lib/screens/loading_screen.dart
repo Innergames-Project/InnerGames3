@@ -2,8 +2,21 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../models/difficulty_level.dart';
+import '../models/home_copy.dart';
+import '../models/language_scope.dart';
+import '../services/case_api_service.dart';
+import 'case_simulation_page.dart';
+
 class CaseLoadingScreen extends StatefulWidget {
-  const CaseLoadingScreen({super.key});
+  const CaseLoadingScreen({
+    super.key,
+    required this.difficulty,
+    required this.prompt,
+  });
+
+  final DifficultyLevel difficulty;
+  final String prompt;
 
   @override
   State<CaseLoadingScreen> createState() => _CaseLoadingScreenState();
@@ -13,12 +26,37 @@ class _CaseLoadingScreenState extends State<CaseLoadingScreen> {
   @override
   void initState() {
     super.initState();
-    Future<void>.delayed(const Duration(milliseconds: 2300), () {
-      if (!mounted) {
-        return;
-      }
+    _callApi();
+  }
+
+  Future<void> _callApi() async {
+    try {
+      final generatedCase = await CaseApiService.generateCase(
+        difficulty: widget.difficulty,
+        prompt: widget.prompt,
+      );
+
+      if (!mounted) return;
+
+      await Navigator.of(context).pushReplacement(
+        MaterialPageRoute<void>(
+          builder: (_) => CaseSimulationPage(generatedCase: generatedCase),
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+
       Navigator.of(context).pop();
-    });
+
+      final copy = HomeCopy.fromLanguage(LanguageScope.read(context));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${copy.loadingErrorPrefix}: ${e.toString()}'),
+          duration: const Duration(seconds: 6),
+          backgroundColor: const Color(0xFFB00020),
+        ),
+      );
+    }
   }
 
   @override
@@ -35,7 +73,7 @@ class _CaseLoadingScreenState extends State<CaseLoadingScreen> {
                 Image.asset('assets/icon/icon.png', width: 240),
                 const SizedBox(height: 34),
                 Text(
-                  'Loading your case',
+                  HomeCopy.fromLanguage(LanguageScope.of(context)).loadingTitle,
                   style: Theme.of(context).textTheme.displaySmall?.copyWith(
                     color: const Color(0xFFE02D91),
                     fontSize: 52,

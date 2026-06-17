@@ -9,13 +9,23 @@ class UploadDropzone extends StatelessWidget {
     required this.uploadHint,
     required this.supportedFormats,
     required this.selectedEvidence,
+    required this.selectedLabel,
+    required this.tapToAddLabel,
+    required this.clearAllLabel,
     required this.onTap,
+    this.onRemoveItem,
+    this.onClearAll,
   });
 
   final String uploadHint;
   final String supportedFormats;
+  final String selectedLabel;
+  final String tapToAddLabel;
+  final String clearAllLabel;
   final List<EvidenceItem> selectedEvidence;
   final VoidCallback onTap;
+  final ValueChanged<int>? onRemoveItem;
+  final VoidCallback? onClearAll;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +37,7 @@ class UploadDropzone extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
         onTap: onTap,
         child: Container(
-          constraints: const BoxConstraints(minHeight: 210),
+          constraints: const BoxConstraints(minHeight: 180),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
             boxShadow: const [
@@ -47,7 +57,7 @@ class UploadDropzone extends StatelessWidget {
               gapLength: 7,
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -66,95 +76,133 @@ class UploadDropzone extends StatelessWidget {
                       size: 28,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 14),
                   if (!hasSelection) ...[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18),
-                      child: Text(
-                        uploadHint,
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: const Color(0xFF4E4E4E),
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18),
-                      child: Text(
-                        supportedFormats,
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(
-                              color: const Color(0xFF7B7B7B),
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14,
-                            ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ] else ...[
                     Text(
-                      'Selected evidence',
+                      uploadHint,
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         color: const Color(0xFF4E4E4E),
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 17,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18),
-                      child: Text(
-                        '${selectedEvidence.length} item${selectedEvidence.length == 1 ? '' : 's'} ready locally',
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(
-                              color: const Color(0xFF7B7B7B),
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14,
+                    Text(
+                      supportedFormats,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: const Color(0xFF7B7B7B),
+                        fontWeight: FontWeight.w400,
+                        fontSize: 13,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ] else ...[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          selectedLabel,
+                          style:
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
+                                color: const Color(0xFF4E4E4E),
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                              ),
+                        ),
+                        const SizedBox(width: 6),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 2,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFE62994),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            '${selectedEvidence.length}',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
                             ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    ConstrainedBox(
-                      constraints: const BoxConstraints(maxHeight: 74),
-                      child: SingleChildScrollView(
-                        padding: const EdgeInsets.symmetric(horizontal: 18),
-                        child: Wrap(
-                          alignment: WrapAlignment.center,
-                          spacing: 8,
-                          runSpacing: 8,
-                          children: selectedEvidence
-                              .map(
-                                (item) => Chip(
-                                  avatar: Icon(
-                                    item.icon,
-                                    size: 18,
-                                    color: const Color(0xFFE62994),
-                                  ),
-                                  label: Text(item.displayName),
-                                  backgroundColor: Colors.white,
-                                  side: const BorderSide(
-                                    color: Color(0xFFD1D1D1),
-                                  ),
-                                ),
-                              )
-                              .toList(),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                     const SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18),
-                      child: Text(
-                        'Tap again to add more files or photos',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: const Color(0xFF7B7B7B),
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: 8,
+                      runSpacing: 6,
+                      children: [
+                        for (int i = 0; i < selectedEvidence.length; i++)
+                          Chip(
+                            avatar: Icon(
+                              selectedEvidence[i].icon,
+                              size: 16,
+                              color: const Color(0xFFE62994),
+                            ),
+                            label: Text(
+                              selectedEvidence[i].displayName,
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                            backgroundColor: Colors.white,
+                            side: const BorderSide(color: Color(0xFFD1D1D1)),
+                            deleteIcon: const Icon(
+                              Icons.close,
+                              size: 15,
+                              color: Color(0xFF888888),
+                            ),
+                            onDeleted: onRemoveItem != null
+                                ? () => onRemoveItem!(i)
+                                : null,
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                            padding: EdgeInsets.zero,
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          tapToAddLabel,
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                color: const Color(0xFF7B7B7B),
+                                fontSize: 12,
+                              ),
                         ),
-                        textAlign: TextAlign.center,
-                      ),
+                        if (onClearAll != null) ...[
+                          const SizedBox(width: 12),
+                          GestureDetector(
+                            onTap: () {},
+                            behavior: HitTestBehavior.opaque,
+                            child: TextButton(
+                              onPressed: onClearAll,
+                              style: TextButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 2,
+                                ),
+                                minimumSize: Size.zero,
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                foregroundColor: const Color(0xFFB02070),
+                              ),
+                              child: Text(
+                                clearAllLabel,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
                     ),
                   ],
                 ],

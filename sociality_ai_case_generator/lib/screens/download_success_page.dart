@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../models/home_copy.dart';
+import '../models/language_scope.dart';
 import '../widgets/how_it_works_overlay.dart';
 
 class DownloadSuccessPage extends StatelessWidget {
@@ -7,6 +9,8 @@ class DownloadSuccessPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final copy = HomeCopy.fromLanguage(LanguageScope.of(context));
+
     return Scaffold(
       body: Stack(
         children: [
@@ -88,9 +92,11 @@ class DownloadSuccessPage extends StatelessWidget {
                           child: Column(
                             children: [
                               Text(
-                                'Download\nsuccessful!',
+                                copy.downloadSuccessTitle,
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.displaySmall
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displaySmall
                                     ?.copyWith(
                                       color: const Color(0xFFE02D91),
                                       fontSize: 62,
@@ -100,9 +106,11 @@ class DownloadSuccessPage extends StatelessWidget {
                               ),
                               const SizedBox(height: 26),
                               Text(
-                                'Your case has been downloaded\nsuccessfully. You can now use it in\nyour educational programs.',
+                                copy.downloadSuccessBody,
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.titleLarge
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge
                                     ?.copyWith(
                                       color: const Color(0xFF6E6E6E),
                                       fontWeight: FontWeight.w500,
@@ -133,18 +141,18 @@ class DownloadSuccessPage extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text(
-                                      'Try your case!',
-                                      style: TextStyle(
+                                    Text(
+                                      copy.tryCaseTitle,
+                                      style: const TextStyle(
                                         color: Color(0xFF101010),
                                         fontWeight: FontWeight.w700,
                                         fontSize: 20,
                                       ),
                                     ),
                                     const SizedBox(height: 12),
-                                    const Text(
-                                      'Test your generated case in an\ninteractive simulation to see how it\nworks in practice.',
-                                      style: TextStyle(
+                                    Text(
+                                      copy.tryCaseBody,
+                                      style: const TextStyle(
                                         color: Color(0xFF666666),
                                         fontSize: 21,
                                         height: 1.13,
@@ -158,21 +166,20 @@ class DownloadSuccessPage extends StatelessWidget {
                                         onPressed: () =>
                                             Navigator.of(context).pop(),
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: const Color(
-                                            0xFFE02D91,
-                                          ),
+                                          backgroundColor:
+                                              const Color(0xFFE02D91),
                                           foregroundColor: Colors.white,
                                           elevation: 5,
-                                          shadowColor: const Color(0x55000000),
+                                          shadowColor:
+                                              const Color(0x55000000),
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                              22,
-                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(22),
                                           ),
                                         ),
-                                        child: const Text(
-                                          'Start case simulation',
-                                          style: TextStyle(
+                                        child: Text(
+                                          copy.startCaseSimulation,
+                                          style: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w500,
                                           ),
@@ -188,9 +195,8 @@ class DownloadSuccessPage extends StatelessWidget {
                                 height: 66,
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    Navigator.of(
-                                      context,
-                                    ).popUntil((route) => route.isFirst);
+                                    Navigator.of(context)
+                                        .popUntil((route) => route.isFirst);
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: const Color(0xFFE02D91),
@@ -201,9 +207,9 @@ class DownloadSuccessPage extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(22),
                                     ),
                                   ),
-                                  child: const Text(
-                                    'Generate another case',
-                                    style: TextStyle(
+                                  child: Text(
+                                    copy.generateAnotherCase,
+                                    style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
                                     ),
