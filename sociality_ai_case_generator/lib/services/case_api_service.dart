@@ -40,6 +40,17 @@ class CaseApiService {
 
     // API wraps the case data under a top-level "case" key.
     final caseData = (decoded['case'] as Map<String, dynamic>?) ?? decoded;
-    return GeneratedCase.fromJson(caseData);
+    final result = GeneratedCase.fromJson(caseData);
+
+    if (result.steps.isEmpty) {
+      // Diagnostic: expose actual response keys so we can fix the parser if needed.
+      throw FormatException(
+        'No steps found in API response. '
+        'Top-level keys: ${decoded.keys.toList()}. '
+        'Case-level keys: ${caseData.keys.toList()}.',
+      );
+    }
+
+    return result;
   }
 }

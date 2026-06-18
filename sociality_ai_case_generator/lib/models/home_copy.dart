@@ -31,12 +31,30 @@ class HomeCopy {
     // ── Loading screen ────────────────────────────────────────────────────────
     required this.loadingTitle,
     required this.loadingErrorPrefix,
+    required this.loadingNoStepsError,
+    required this.loadingFallbackTitle,
+    required this.loadingFallbackSubtitle,
+    required this.generatingStage1,
+    required this.generatingStage2,
+    required this.generatingStage3,
+    required this.generatingStage4,
+    required this.generationFailed,
+    required this.retryGeneration,
+    required this.useSampleCase,
     // ── Case simulation page ──────────────────────────────────────────────────
     required this.noStepsGenerated,
     required this.startCaseSimulation,
     required this.downloadCase,
     required this.regenerateStep,
     required this.editManually,
+    required this.stepLabel,
+    required this.choicesLabel,
+    required this.tapToSeeChoices,
+    required this.tapToFlipBack,
+    required this.caseReviewTitle,
+    required this.editScenarioLabel,
+    required this.saveChanges,
+    required this.cancelButton,
     // ── Download success page ─────────────────────────────────────────────────
     required this.downloadSuccessTitle,
     required this.downloadSuccessBody,
@@ -84,12 +102,30 @@ class HomeCopy {
   // ── Loading screen ──────────────────────────────────────────────────────────
   final String loadingTitle;
   final String loadingErrorPrefix;
+  final String loadingNoStepsError;
+  final String loadingFallbackTitle;
+  final String loadingFallbackSubtitle;
+  final String generatingStage1;
+  final String generatingStage2;
+  final String generatingStage3;
+  final String generatingStage4;
+  final String generationFailed;
+  final String retryGeneration;
+  final String useSampleCase;
   // ── Case simulation page ────────────────────────────────────────────────────
   final String noStepsGenerated;
   final String startCaseSimulation;
   final String downloadCase;
   final String regenerateStep;
   final String editManually;
+  final String stepLabel;
+  final String choicesLabel;
+  final String tapToSeeChoices;
+  final String tapToFlipBack;
+  final String caseReviewTitle;
+  final String editScenarioLabel;
+  final String saveChanges;
+  final String cancelButton;
   // ── Download success page ───────────────────────────────────────────────────
   final String downloadSuccessTitle;
   final String downloadSuccessBody;
@@ -139,11 +175,29 @@ class HomeCopy {
           optional: 'optional',
           loadingTitle: 'Loading your case',
           loadingErrorPrefix: 'Could not generate case',
+          loadingNoStepsError: 'The case was generated but contains no content.',
+          loadingFallbackTitle: 'Loading sample case',
+          loadingFallbackSubtitle: 'Loading sample case…',
+          generatingStage1: 'Structuring your case',
+          generatingStage2: 'Writing step options',
+          generatingStage3: 'Adding consequences',
+          generatingStage4: 'Finalising',
+          generationFailed: 'Generation failed',
+          retryGeneration: 'Try again',
+          useSampleCase: 'Use sample case',
           noStepsGenerated: 'No steps were generated.',
           startCaseSimulation: 'Start case simulation',
           downloadCase: 'Download case',
           regenerateStep: 'Regenerate this step',
           editManually: 'Edit manually',
+          stepLabel: 'Step',
+          choicesLabel: 'Choices',
+          tapToSeeChoices: 'Tap to see choices',
+          tapToFlipBack: 'Flip back',
+          caseReviewTitle: 'Generated Case',
+          editScenarioLabel: 'Scenario',
+          saveChanges: 'Save',
+          cancelButton: 'Cancel',
           downloadSuccessTitle: 'Download\nsuccessful!',
           downloadSuccessBody:
               'Your case has been downloaded successfully.\nYou can now use it in your educational programs.',
@@ -196,11 +250,29 @@ class HomeCopy {
           optional: 'optioneel',
           loadingTitle: 'Je casus laden',
           loadingErrorPrefix: 'Kon casus niet genereren',
+          loadingNoStepsError: 'De casus is aangemaakt maar bevat geen inhoud.',
+          loadingFallbackTitle: 'Voorbeeldcasus laden',
+          loadingFallbackSubtitle: 'Voorbeeldcasus laden…',
+          generatingStage1: 'Je casus structureren',
+          generatingStage2: 'Stapopties schrijven',
+          generatingStage3: 'Gevolgen toevoegen',
+          generatingStage4: 'Afronden',
+          generationFailed: 'Generatie mislukt',
+          retryGeneration: 'Opnieuw proberen',
+          useSampleCase: 'Gebruik voorbeeldcasus',
           noStepsGenerated: 'Er zijn geen stappen gegenereerd.',
           startCaseSimulation: 'Start casussimulatie',
           downloadCase: 'Casus downloaden',
           regenerateStep: 'Stap opnieuw genereren',
           editManually: 'Handmatig bewerken',
+          stepLabel: 'Stap',
+          choicesLabel: 'Keuzes',
+          tapToSeeChoices: 'Tik om keuzes te zien',
+          tapToFlipBack: 'Terugdraaien',
+          caseReviewTitle: 'Gegenereerde casus',
+          editScenarioLabel: 'Scenario',
+          saveChanges: 'Opslaan',
+          cancelButton: 'Annuleren',
           downloadSuccessTitle: 'Download\ngeslaagd!',
           downloadSuccessBody:
               'Je casus is succesvol gedownload.\nJe kunt het nu gebruiken in je onderwijsprogramma\'s.',
