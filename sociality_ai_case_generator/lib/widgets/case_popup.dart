@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/json_service.dart';
+import '../pages/mock_sim_page.dart';
 
 class CasePopup {
   static Future<void> showCase(BuildContext context) async {
@@ -53,13 +54,25 @@ class CasePopup {
                     },
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Close'),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          Navigator.push(
+                          context,
+                            MaterialPageRoute(builder: (_) => const MockSimPage()),
+                          );
+                        },
+                        child: const Text('Play Mock Sim'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text('Close'),
+                      ),
+                    ],
                   ),
-                ),
               ],
             ),
           ),
