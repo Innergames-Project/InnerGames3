@@ -63,6 +63,7 @@ class _CaseLoadingScreenState extends State<CaseLoadingScreen> {
     setState(() {
       _state = _LoadState.generating;
       _apiError = '';
+      _stageIndex = 0;
     });
     _startStageTimer();
 
@@ -187,6 +188,7 @@ class _CaseLoadingScreenState extends State<CaseLoadingScreen> {
                         padding: const EdgeInsets.fromLTRB(24, 28, 24, 28),
                         child: switch (_state) {
                           _LoadState.generating => _GeneratingBody(
+                            generatingLabel: copy.generatingLabel,
                             stages: stages,
                             stageIndex: _stageIndex,
                             progress: progress,
@@ -217,11 +219,13 @@ class _CaseLoadingScreenState extends State<CaseLoadingScreen> {
 
 class _GeneratingBody extends StatelessWidget {
   const _GeneratingBody({
+    required this.generatingLabel,
     required this.stages,
     required this.stageIndex,
     required this.progress,
   });
 
+  final String generatingLabel;
   final List<String> stages;
   final int stageIndex;
   final double progress;
@@ -242,7 +246,7 @@ class _GeneratingBody extends StatelessWidget {
           ),
         ),
         Text(
-          'Generating…',
+          generatingLabel,
           style: Theme.of(context).textTheme.displaySmall?.copyWith(
             color: const Color(0xFF333333),
             fontWeight: FontWeight.w700,
@@ -422,7 +426,7 @@ class _FailedBody extends StatelessWidget {
                 child: OutlinedButton.icon(
                   onPressed: onBack,
                   icon: const Icon(Icons.arrow_back_rounded, size: 18),
-                  label: const Text('Back'),
+                  label: Text(copy.cancelButton),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: const Color(0xFF555555),
                     side: const BorderSide(color: Color(0xFFCCCCCC)),

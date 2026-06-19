@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../models/generated_case.dart';
 import '../models/home_copy.dart';
 import '../models/language_scope.dart';
+import '../services/pdf_export_service.dart';
 import '../widgets/how_it_works_overlay.dart';
 import '../widgets/language_selector.dart';
 import 'download_success_page.dart';
@@ -20,11 +21,43 @@ class CaseSimulationPage extends StatefulWidget {
 
 class _CaseSimulationPageState extends State<CaseSimulationPage> {
   late List<GeneratedCaseStep> _steps;
+  bool _isExporting = false;
+  final _downloadButtonKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
     _steps = List.of(widget.generatedCase.steps);
+  }
+
+  Future<void> _exportPdf() async {
+    if (_isExporting) return;
+    setState(() => _isExporting = true);
+    final copy = HomeCopy.fromLanguage(LanguageScope.read(context));
+    // Determine the button's screen rect so iOS can anchor the share popover.
+    final box = _downloadButtonKey.currentContext?.findRenderObject() as RenderBox?;
+    final origin = box != null
+        ? box.localToGlobal(Offset.zero) & box.size
+        : Rect.fromCenter(
+            center: Offset(MediaQuery.of(context).size.width / 2,
+                MediaQuery.of(context).size.height - 80),
+            width: 200,
+            height: 60,
+          );
+    try {
+      await PdfExportService.export(
+        steps: _steps,
+        copy: copy,
+        filename: 'case_cards',
+        shareOrigin: origin,
+      );
+      if (!mounted) return;
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(builder: (_) => const DownloadSuccessPage()),
+      );
+    } finally {
+      if (mounted) setState(() => _isExporting = false);
+    }
   }
 
   void _saveStep(int index, String newScenario, List<String> newChoiceBodies) {
@@ -246,16 +279,10 @@ class _CaseSimulationPageState extends State<CaseSimulationPage> {
                             const SizedBox(height: 10),
                             // Download button
                             SizedBox(
+                              key: _downloadButtonKey,
                               height: 60,
                               child: OutlinedButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute<void>(
-                                      builder: (_) =>
-                                          const DownloadSuccessPage(),
-                                    ),
-                                  );
-                                },
+                                onPressed: _isExporting ? null : _exportPdf,
                                 style: OutlinedButton.styleFrom(
                                   foregroundColor: const Color(0xFFE02D91),
                                   side: const BorderSide(
@@ -271,7 +298,16 @@ class _CaseSimulationPageState extends State<CaseSimulationPage> {
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                                child: Text(copy.downloadCase),
+                                child: _isExporting
+                                    ? const SizedBox(
+                                        width: 20,
+                                        height: 20,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2.5,
+                                          color: Color(0xFFE02D91),
+                                        ),
+                                      )
+                                    : Text(copy.downloadCase),
                               ),
                             ),
                           ],
@@ -335,54 +371,60 @@ class _FlipStepCardState extends State<_FlipStepCard>
 
   @override
   Widget build(BuildContext context) {
+    // IntrinsicHeight measures the natural height of both faces, takes the max,
+    // and StackFit.expand forces both to that same height — shorter face shows
+    // empty background, no truncation needed.
     return GestureDetector(
       onTap: _flip,
-      child: AnimatedBuilder(
-        animation: _ctrl,
-        builder: (context, _) {
-          final value = _ctrl.value;
-          final showFront = value <= 0.5;
-          // Front rotates 0 → π; back enters from -π → 0
-          final frontAngle = value * math.pi;
-          final backAngle = (value - 1.0) * math.pi;
+      child: IntrinsicHeight(
+        child: AnimatedBuilder(
+          animation: _ctrl,
+          builder: (context, _) {
+            final value = _ctrl.value;
+            final showFront = value <= 0.5;
+            // Front rotates 0 → π; back enters from -π → 0
+            final frontAngle = value * math.pi;
+            final backAngle = (value - 1.0) * math.pi;
 
-          return Stack(
-            children: [
-              // Back face — always in tree to fix the card height
-              Visibility(
-                visible: !showFront,
-                maintainSize: true,
-                maintainAnimation: true,
-                maintainState: true,
-                child: Transform(
-                  alignment: Alignment.center,
-                  transform: Matrix4.identity()
-                    ..setEntry(3, 2, 0.001)
-                    ..rotateY(backAngle),
-                  child: _CardBack(step: widget.step, copy: widget.copy),
-                ),
-              ),
-              // Front face — always in tree to fix the card height
-              Visibility(
-                visible: showFront,
-                maintainSize: true,
-                maintainAnimation: true,
-                maintainState: true,
-                child: Transform(
-                  alignment: Alignment.center,
-                  transform: Matrix4.identity()
-                    ..setEntry(3, 2, 0.001)
-                    ..rotateY(frontAngle),
-                  child: _CardFront(
-                    step: widget.step,
-                    copy: widget.copy,
-                    onEdit: widget.onEdit,
+            return Stack(
+              fit: StackFit.expand,
+              children: [
+                // Back face
+                Visibility(
+                  visible: !showFront,
+                  maintainSize: true,
+                  maintainAnimation: true,
+                  maintainState: true,
+                  child: Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.identity()
+                      ..setEntry(3, 2, 0.001)
+                      ..rotateY(backAngle),
+                    child: _CardBack(step: widget.step, copy: widget.copy),
                   ),
                 ),
-              ),
-            ],
-          );
-        },
+                // Front face
+                Visibility(
+                  visible: showFront,
+                  maintainSize: true,
+                  maintainAnimation: true,
+                  maintainState: true,
+                  child: Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.identity()
+                      ..setEntry(3, 2, 0.001)
+                      ..rotateY(frontAngle),
+                    child: _CardFront(
+                      step: widget.step,
+                      copy: widget.copy,
+                      onEdit: widget.onEdit,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -405,6 +447,7 @@ class _CardFront extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -499,11 +542,12 @@ class _CardFront extends StatelessWidget {
               ],
             ),
           ),
-          // Scenario body
+          // Body — natural height so IntrinsicHeight can measure correctly
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 13, 16, 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   step.subtitle,
@@ -553,8 +597,9 @@ class _CardBack extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        color: const Color(0xFF2C1A3E),
+        color: const Color(0xFF7A0E48),
         borderRadius: BorderRadius.circular(20),
         boxShadow: const [
           BoxShadow(
@@ -572,7 +617,7 @@ class _CardBack extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
             decoration: const BoxDecoration(
-              color: Color(0xFF1A0D2B),
+              color: Color(0xFF4D0830),
               borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
             ),
             child: Row(
@@ -590,23 +635,24 @@ class _CardBack extends StatelessWidget {
                 Text(
                   copy.tapToFlipBack,
                   style: const TextStyle(
-                    color: Color(0xFF9999AA),
+                    color: Color(0xFFCC99B5),
                     fontSize: 11,
                   ),
                 ),
                 const SizedBox(width: 4),
                 const Icon(
                   Icons.flip_camera_android_rounded,
-                  color: Color(0xFF9999AA),
+                  color: Color(0xFFCC99B5),
                   size: 14,
                 ),
               ],
             ),
           ),
-          // Choices
+          // Choices — natural height so IntrinsicHeight can measure correctly
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 13, 16, 15),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 for (int i = 0; i < step.details.length; i++) ...[
                   _ChoiceRow(detail: step.details[i]),

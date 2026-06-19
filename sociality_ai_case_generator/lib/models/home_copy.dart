@@ -34,6 +34,7 @@ class HomeCopy {
     required this.loadingNoStepsError,
     required this.loadingFallbackTitle,
     required this.loadingFallbackSubtitle,
+    required this.generatingLabel,
     required this.generatingStage1,
     required this.generatingStage2,
     required this.generatingStage3,
@@ -105,6 +106,7 @@ class HomeCopy {
   final String loadingNoStepsError;
   final String loadingFallbackTitle;
   final String loadingFallbackSubtitle;
+  final String generatingLabel;
   final String generatingStage1;
   final String generatingStage2;
   final String generatingStage3;
@@ -178,6 +180,7 @@ class HomeCopy {
           loadingNoStepsError: 'The case was generated but contains no content.',
           loadingFallbackTitle: 'Loading sample case',
           loadingFallbackSubtitle: 'Loading sample case…',
+          generatingLabel: 'Generating…',
           generatingStage1: 'Structuring your case',
           generatingStage2: 'Writing step options',
           generatingStage3: 'Adding consequences',
@@ -253,6 +256,7 @@ class HomeCopy {
           loadingNoStepsError: 'De casus is aangemaakt maar bevat geen inhoud.',
           loadingFallbackTitle: 'Voorbeeldcasus laden',
           loadingFallbackSubtitle: 'Voorbeeldcasus laden…',
+          generatingLabel: 'Genereren…',
           generatingStage1: 'Je casus structureren',
           generatingStage2: 'Stapopties schrijven',
           generatingStage3: 'Gevolgen toevoegen',
