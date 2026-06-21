@@ -4,47 +4,27 @@ import '../services/json_service.dart';
 
 class RawJsonPopup {
   static Future<void> show(BuildContext context) async {
-    final results = await Future.wait([
-      JsonService.instance.loadJson('initial_data/cards_template.json'),
-      JsonService.instance.loadJson('initial_data/Case_steps.json'),
-    ]);
+    final data = await JsonService.instance.loadJson(
+      'assets/initial_data/cards_template.json',
+    );
 
     if (!context.mounted) return;
 
     showDialog(
       context: context,
-      builder: (context) => _RawJsonDialog(
-        sources: {
-          'Cards': results[0],
-          'Phases': results[1],
-        },
-      ),
+      builder: (context) => _RawJsonDialog(data: data),
     );
   }
 }
 
-class _RawJsonDialog extends StatefulWidget {
-  final Map<String, dynamic> sources;
+class _RawJsonDialog extends StatelessWidget {
+  final Map<String, dynamic> data;
 
-  const _RawJsonDialog({required this.sources});
-
-  @override
-  State<_RawJsonDialog> createState() => _RawJsonDialogState();
-}
-
-class _RawJsonDialogState extends State<_RawJsonDialog> {
-  late String _selected;
-
-  @override
-  void initState() {
-    super.initState();
-    _selected = widget.sources.keys.first;
-  }
+  const _RawJsonDialog({required this.data});
 
   @override
   Widget build(BuildContext context) {
-    final pretty = const JsonEncoder.withIndent('  ')
-        .convert(widget.sources[_selected]);
+    final pretty = const JsonEncoder.withIndent('  ').convert(data);
 
     return Dialog(
       insetPadding: const EdgeInsets.all(20),
@@ -57,15 +37,10 @@ class _RawJsonDialogState extends State<_RawJsonDialog> {
           children: [
             Row(
               children: [
-                for (final key in widget.sources.keys)
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: ChoiceChip(
-                      label: Text(key),
-                      selected: _selected == key,
-                      onSelected: (_) => setState(() => _selected = key),
-                    ),
-                  ),
+                const Text(
+                  'Case JSON',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
                 const Spacer(),
                 IconButton(
                   icon: const Icon(Icons.close),

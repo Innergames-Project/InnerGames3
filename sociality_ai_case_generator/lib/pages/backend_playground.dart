@@ -3,30 +3,42 @@ import '../widgets/case_RawJsonPopup.dart';
 import '../validators/case_qa_runner.dart';
 import 'mock_sim_page.dart';
 
-class BackendReviewingTestPage extends StatelessWidget {
-  const BackendReviewingTestPage({super.key});
+/// Call this from anywhere to open the backend testing playground.
+Future<void> showBackendPlayground(BuildContext context) {
+  return showDialog(
+    context: context,
+    builder: (_) => const _BackendPlaygroundDialog(),
+  );
+}
 
-  Future<void> loadCase(BuildContext context) async {
+class _BackendPlaygroundDialog extends StatelessWidget {
+  const _BackendPlaygroundDialog();
+
+  Future<void> _loadCase(BuildContext context) async {
+    Navigator.of(context).pop();
     await RawJsonPopup.show(context);
   }
 
-  void cardManagement() {
+  void _testCase(BuildContext context) {
+    Navigator.of(context).pop();
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const MockSimPage()),
+    );
+  }
+
+  void _cardManagement() {
     print("Card Management pressed");
   }
 
-  Future<void> validateCaseStructure(BuildContext context) async {
-    print("STEP 1: BUTTON PRESSED");
+  Future<void> _validateCaseStructure(BuildContext context) async {
+    Navigator.of(context).pop();
 
     try {
       final runner = CaseQARunner();
-
-      print("STEP 2: RUNNING QA");
-
       final result = await runner.run(
         'assets/initial_data/cards_template.json',
       );
-
-      print("STEP 3: QA FINISHED");
 
       if (!context.mounted) return;
 
@@ -49,7 +61,7 @@ class BackendReviewingTestPage extends StatelessWidget {
         ),
       );
     } catch (e, stack) {
-      print("❌ QA ERROR: $e");
+      print("QA ERROR: $e");
       print(stack);
 
       if (!context.mounted) return;
@@ -72,39 +84,58 @@ class BackendReviewingTestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Backend Testing/Reviewing Playground'),
+    return AlertDialog(
+      title: const Text('Backend Playground'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _PlaygroundButton(
+            label: 'Load Case',
+            onPressed: () => _loadCase(context),
+          ),
+          const SizedBox(height: 12),
+          _PlaygroundButton(
+            label: 'Test Case',
+            onPressed: () => _testCase(context),
+          ),
+          const SizedBox(height: 12),
+          _PlaygroundButton(
+            label: 'Card Management',
+            onPressed: _cardManagement,
+          ),
+          const SizedBox(height: 12),
+          _PlaygroundButton(
+            label: 'Validate Case Structure',
+            onPressed: () => _validateCaseStructure(context),
+          ),
+        ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () => loadCase(context),
-              child: const Text('Load Case'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const MockSimPage()),
-              ),
-              child: const Text('Test Case'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: cardManagement,
-              child: const Text('Card Management'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () => validateCaseStructure(context),
-              child: const Text('Validate Case Structure'),
-            ),
-          ],
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Close'),
         ),
+      ],
+    );
+  }
+}
+
+class _PlaygroundButton extends StatelessWidget {
+  final String label;
+  final VoidCallback onPressed;
+
+  const _PlaygroundButton({
+    required this.label,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        child: Text(label),
       ),
     );
   }

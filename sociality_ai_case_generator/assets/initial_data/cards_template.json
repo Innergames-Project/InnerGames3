@@ -1,82 +1,206 @@
 {
-  "case_name": "Crisis Intervention: The Janssen Case",
-  "total_cards": 24,
-  "cards": [
-    { "id": "1A", "step": 1, "text": "Report of a child left alone. Parents are unreachable. First step?", "choices": [
-      { "text": "Contact emergency family network.", "next_id": "2A", "interventions": [1, 2] },
-      { "text": "Wait at the house for parents to return.", "next_id": "2B", "interventions": [3] },
-      { "text": "Call the police immediately.", "next_id": "2C", "interventions": [] }
-    ]},
-    { "id": "2A", "step": 2, "text": "Grandparents take the child. Mother arrives later, highly distressed.", "choices": [
-      { "text": "Calm her and assess the home situation.", "next_id": "3A", "interventions": [4, 5] },
-      { "text": "Strictly inform her of the legal consequences.", "next_id": "3B", "interventions": [] }
-    ]},
-    { "id": "2B", "step": 2, "text": "Mother arrives 3 hours later. She claims she had a work emergency.", "choices": [
-      { "text": "Validate her stress but set a safety plan.", "next_id": "3A", "interventions": [1] },
-      { "text": "Report her to the child protection registry.", "next_id": "3C", "interventions": [6] }
-    ]},
-    { "id": "2C", "step": 2, "text": "Police arrive. The neighborhood is watching. The mother is arrested.", "choices": [
-      { "text": "Try to mitigate the trauma for the child.", "next_id": "3C", "interventions": [2] },
-      { "text": "Let the legal system take over.", "next_id": "4G", "interventions": [] }
-    ]},
-    { "id": "3A", "step": 3, "text": "Mother admits she is overwhelmed and has no childcare support.", "choices": [
-      { "text": "Arrange professional daycare and coaching.", "next_id": "4A", "interventions": [3, 6, 7] },
-      { "text": "Suggest she finds a cheaper apartment.", "next_id": "4B", "interventions": [] }
-    ]},
-    { "id": "3B", "step": 3, "text": "Mother becomes defensive and refuses to cooperate with the plan.", "choices": [
-      { "text": "Bring in a neutral family mediator.", "next_id": "4B", "interventions": [4] },
-      { "text": "Threaten her with child removal.", "next_id": "4D", "interventions": [] }
-    ]},
-    { "id": "3C", "step": 3, "text": "The child is in foster care. You must decide on a visitation plan.", "choices": [
-      { "text": "Structured, supervised weekly visits.", "next_id": "4C", "interventions": [5] },
-      { "text": "Wait for a court order.", "next_id": "4H", "interventions": [] }
-    ]},
-    { "id": "4A", "step": 4, "text": "Daycare is working. Mother is attending sessions regularly.", "choices": [
-      { "text": "Finalize a long-term sustainability plan.", "next_id": "5A", "interventions": [8] },
-      { "text": "Reduce supervision immediately.", "next_id": "5B", "interventions": [] }
-    ]},
-    { "id": "4B", "step": 4, "text": "Progress is slow. The mother misses a counseling session.", "choices": [
-      { "text": "Home visit to investigate the barrier.", "next_id": "5B", "interventions": [3] },
-      { "text": "Issue a formal strike/warning.", "next_id": "5C", "interventions": [] }
-    ]},
-    { "id": "4C", "step": 4, "text": "Visits are emotional. The child wants to go home.", "choices": [
-      { "text": "Start a phased reunification process.", "next_id": "5B", "interventions": [7] },
-      { "text": "Maintain foster care for now.", "next_id": "5D", "interventions": [] }
-    ]},
-    { "id": "4D", "step": 4, "text": "Mother disappears. The child is distraught. Case is stalling.", "choices": [
-      { "text": "Intensive search and police report.", "next_id": "5D", "interventions": [] }
-    ]},
-    { "id": "4G", "step": 4, "text": "LOSS: Trust is destroyed. The family has moved into a high-conflict legal battle.", "is_terminal": true, "result": "Loss" },
-    { "id": "4H", "step": 4, "text": "LOSS: Administrative delay caused the child to stay in foster care too long. Bonding failed.", "is_terminal": true, "result": "Loss" },
-    { "id": "5A", "step": 5, "text": "The family is thriving. The social network is now fully supportive.", "choices": [
-      { "text": "Hand over the case to community care.", "next_id": "6A", "interventions": [3] }
-    ]},
-    { "id": "5B", "step": 5, "text": "Stability reached, but the family still relies heavily on you.", "choices": [
-      { "text": "Push for independence.", "next_id": "6A", "interventions": [] }
-    ]},
-    { "id": "5C", "step": 5, "text": "Mother is angry about the warning. Cooperation has ceased.", "choices": [
-      { "text": "Attempt a final reconciliation talk.", "next_id": "6A", "interventions": [1] },
-      { "text": "Escalate to permanent removal.", "next_id": "5F", "interventions": [] }
-    ]},
-    { "id": "5D", "step": 5, "text": "Reunification failed. The child remains in the system.", "choices": [
-      { "text": "Finalize long-term foster plan.", "next_id": "6A", "interventions": [] }
-    ]},
-    { "id": "5F", "step": 5, "text": "LOSS: Ethical breach. Your intervention caused more harm than the original situation.", "is_terminal": true, "result": "Loss" },
-    { "id": "6A", "step": 6, "text": "CASE CLOSED: Final review of professional choices and social impact.", "is_terminal": true, "result": "Success" },
-    { "id": "1B", "step": 1, "text": "Alt Start: You receive a call from a school counselor regarding the child.", "choices": [
-      { "text": "Schedule a meeting with school first.", "next_id": "2A", "interventions": [8] }
-    ]},
-    { "id": "1C", "step": 1, "text": "Alt Start: The mother calls you herself asking for help.", "choices": [
-      { "text": "Offer immediate phone support.", "next_id": "2B", "interventions": [4] }
-    ]},
-    { "id": "2D", "step": 2, "text": "The child refuses to speak to anyone and hides under a bed.", "choices": [
-      { "text": "Use a specialized child therapist.", "next_id": "3A", "interventions": [2, 5] }
-    ]},
-    { "id": "3D", "step": 3, "text": "Bureaucratic delay: The funding for daycare is pending.", "choices": [
-      { "text": "Use emergency discretionary funds.", "next_id": "4A", "interventions": [7] }
-    ]},
-    { "id": "4E", "step": 4, "text": "A relative comes forward offering to help full-time.", "choices": [
-      { "text": "Vet the relative and initiate transfer.", "next_id": "5A", "interventions": [1] }
-    ]}
+  "difficulty": "medium",
+  "stepCards": [
+    {
+      "step": 1,
+      "scenarioText": "Joris Bakker, 15, moved from a small village in Friesland to Rotterdam four months ago when his mother took a new job. He has made no friends at his large new school, eats lunch alone, and his grades are slipping. His mother contacts the school's social worker, worried that Joris has stopped wanting to leave his room. At intake, Joris is polite but withdrawn, insisting that 'everything is fine.'",
+      "choices": [
+        { "key": "A", "text": "Start with a relaxed one-on-one conversation to understand how Joris experiences his new life, before proposing anything.", "consequenceCardKey": "1A" },
+        { "key": "B", "text": "Immediately enrol him in the school's formal buddy-mentoring programme.", "consequenceCardKey": "1B" },
+        { "key": "C", "text": "Call a meeting with his teachers to flag his slipping grades as the priority.", "consequenceCardKey": "1C" }
+      ]
+    },
+    {
+      "step": 2,
+      "scenarioText": "Joris has opened up. He explains that classmates tease his Frisian accent and that he feels he doesn't 'count' as a real Rotterdammer. He says he used to play football every week back home and misses feeling part of a team.",
+      "choices": [
+        { "key": "A", "text": "Affirm that his way of speaking and his background are equally valued, and explore where he might feel he belongs again.", "consequenceCardKey": "2A" },
+        { "key": "B", "text": "Tell him the teasing is normal and he should simply toughen up.", "consequenceCardKey": "2B" }
+      ]
+    },
+    {
+      "step": 3,
+      "scenarioText": "Joris is willing to try connecting with others, but is nervous about being the outsider. There is a local youth football club near the school and an informal lunchtime games table run by older students.",
+      "choices": [
+        { "key": "A", "text": "Introduce him to the lunchtime games group so he can build casual ties close to home.", "consequenceCardKey": "3A" },
+        { "key": "B", "text": "Keep all support inside scheduled office sessions, away from peers.", "consequenceCardKey": "3B" }
+      ]
+    },
+    {
+      "step": 4,
+      "scenarioText": "Joris now has a couple of casual acquaintances and notices several other newly-arrived students who are also struggling to fit in. He wonders aloud whether the school does anything for kids who move in mid-year.",
+      "choices": [
+        { "key": "A", "text": "Support Joris and the other newcomers in proposing a peer welcome-circle to the school, giving them a collective voice.", "consequenceCardKey": "4A" },
+        { "key": "B", "text": "Discourage him from getting involved with others' problems and keep the focus narrowly on himself.", "consequenceCardKey": "4B" }
+      ]
+    },
+    {
+      "step": 5,
+      "scenarioText": "The welcome-circle idea is gaining traction, but it needs to be embedded in school policy to last beyond Joris's own year. The school's care coordinator is open to a meeting.",
+      "choices": [
+        { "key": "A", "text": "Help the students formally present the welcome-circle so the school adopts it as a standing arrangement available to every newcomer.", "consequenceCardKey": "5A" },
+        { "key": "B", "text": "Leave it as a loose informal idea and let it fade once the term ends.", "consequenceCardKey": "5B" }
+      ]
+    },
+    {
+      "step": 6,
+      "scenarioText": "Joris reflects with the social worker on how far he has come: he has friends, plays football again, helped build something for others, and feels he genuinely belongs in Rotterdam. Together they review whether his footing is now secure for the long term.",
+      "choices": [
+        { "key": "A", "text": "Confirm his stable place in school life and ensure the supports around him are durable, then close the case as a success.", "consequenceCardKey": "6A" },
+        { "key": "B", "text": "Declare the work done and step away without checking that anything will hold.", "consequenceCardKey": "6B" }
+      ]
+    }
+  ],
+  "consequenceCards": [
+    {
+      "key": "1A",
+      "step": 1,
+      "consequenceText": "By meeting Joris where he is, you create the room for him to be himself rather than a problem to be fixed — the core of social empowerment. This relational, close-by approach outside any fixed protocol builds the trust everything else depends on.",
+      "interventions": [
+        { "aspect": { "kind": "condition", "condition": "Social empowerment", "label": "Social empowerment" }, "scope": "individual", "formality": "informal" },
+        { "aspect": { "kind": "value", "condition": "Social empowerment", "label": "Human dignity" }, "scope": "individual", "formality": "informal" }
+      ],
+      "nextStep": 2,
+      "isEnding": false,
+      "isWin": false
+    },
+    {
+      "key": "1B",
+      "step": 1,
+      "consequenceText": "Pushing Joris into a formal programme before understanding him treats the procedure as more important than the person. He attends one session, feels processed rather than seen, and disengages.",
+      "interventions": [
+        { "aspect": { "kind": "condition", "condition": "Social inclusion", "label": "Social inclusion" }, "scope": "individual", "formality": "formal" }
+      ],
+      "nextStep": null,
+      "isEnding": true,
+      "isWin": false
+    },
+    {
+      "key": "1C",
+      "step": 1,
+      "consequenceText": "Framing Joris primarily through his grades reduces him to an output and skips the underlying isolation. The teachers apply pressure, Joris feels misunderstood, and he withdraws further.",
+      "interventions": [
+        { "aspect": { "kind": "condition", "condition": "Socio-economic security", "label": "Socio-economic security" }, "scope": "individual", "formality": "formal" }
+      ],
+      "nextStep": null,
+      "isEnding": true,
+      "isWin": false
+    },
+    {
+      "key": "2A",
+      "step": 2,
+      "consequenceText": "Affirming that his accent and background are of equal worth speaks directly to the value of equality — the experience of mattering. Joris visibly relaxes when he hears that he doesn't have to erase where he comes from to belong here.",
+      "interventions": [
+        { "aspect": { "kind": "condition", "condition": "Social inclusion", "label": "Social inclusion" }, "scope": "individual", "formality": "informal" },
+        { "aspect": { "kind": "value", "condition": "Social inclusion", "label": "Equality" }, "scope": "individual", "formality": "informal" }
+      ],
+      "nextStep": 3,
+      "isEnding": false,
+      "isWin": false
+    },
+    {
+      "key": "2B",
+      "step": 2,
+      "consequenceText": "Dismissing the teasing as something to endure tells Joris his experience does not matter. The fragile trust collapses and he stops attending sessions altogether.",
+      "interventions": [
+        { "aspect": { "kind": "value", "condition": "Social inclusion", "label": "Equality" }, "scope": "individual", "formality": "informal" }
+      ],
+      "nextStep": null,
+      "isEnding": true,
+      "isWin": false
+    },
+    {
+      "key": "3A",
+      "step": 3,
+      "consequenceText": "Connecting Joris to the informal lunchtime group fosters social cohesion through everyday, low-pressure belonging close to home. Small shared moments give him the felt sense of being part of something — the beginnings of solidarity.",
+      "interventions": [
+        { "aspect": { "kind": "condition", "condition": "Social cohesion", "label": "Social cohesion" }, "scope": "individual", "formality": "informal" },
+        { "aspect": { "kind": "value", "condition": "Social cohesion", "label": "Solidarity" }, "scope": "individual", "formality": "informal" }
+      ],
+      "nextStep": 4,
+      "isEnding": false,
+      "isWin": false
+    },
+    {
+      "key": "3B",
+      "step": 3,
+      "consequenceText": "Keeping support locked inside office hours protects Joris from risk but also from connection. He stays safe and stays alone; nothing in his actual social world changes.",
+      "interventions": [
+        { "aspect": { "kind": "condition", "condition": "Social empowerment", "label": "Social empowerment" }, "scope": "individual", "formality": "formal" }
+      ],
+      "nextStep": null,
+      "isEnding": true,
+      "isWin": false
+    },
+    {
+      "key": "4A",
+      "step": 4,
+      "consequenceText": "Supporting the newcomers to speak collectively lifts the work from the individual to the community level and builds solidarity between peers who share a struggle. Giving them a shared voice turns private isolation into a common cause.",
+      "interventions": [
+        { "aspect": { "kind": "condition", "condition": "Social cohesion", "label": "Social cohesion" }, "scope": "collective", "formality": "informal" },
+        { "aspect": { "kind": "value", "condition": "Social cohesion", "label": "Solidarity" }, "scope": "collective", "formality": "informal" }
+      ],
+      "nextStep": 5,
+      "isEnding": false,
+      "isWin": false
+    },
+    {
+      "key": "4B",
+      "step": 4,
+      "consequenceText": "Steering Joris away from the others keeps his progress narrowly personal. He holds onto his own small gains but the wider chance to build something shared is lost, and the moment passes.",
+      "interventions": [
+        { "aspect": { "kind": "value", "condition": "Social cohesion", "label": "Solidarity" }, "scope": "individual", "formality": "informal" }
+      ],
+      "nextStep": null,
+      "isEnding": true,
+      "isWin": false
+    },
+    {
+      "key": "5A",
+      "step": 5,
+      "consequenceText": "Helping the students embed the welcome-circle in school policy works at the collective, formal level to secure social justice — ensuring future newcomers can take part as a matter of course rather than luck. This is the structural change that makes participation real for others, not just Joris.",
+      "interventions": [
+        { "aspect": { "kind": "condition", "condition": "Socio-economic security", "label": "Socio-economic security" }, "scope": "collective", "formality": "formal" },
+        { "aspect": { "kind": "value", "condition": "Socio-economic security", "label": "Social justice" }, "scope": "collective", "formality": "formal" },
+        { "aspect": { "kind": "value", "condition": "Social inclusion", "label": "Equality" }, "scope": "collective", "formality": "formal" }
+      ],
+      "nextStep": 6,
+      "isEnding": false,
+      "isWin": false
+    },
+    {
+      "key": "5B",
+      "step": 5,
+      "consequenceText": "Letting the idea stay informal means it depends entirely on Joris's energy and vanishes when he moves on. The immediate group benefits, but nothing durable is built into the institution.",
+      "interventions": [
+        { "aspect": { "kind": "value", "condition": "Socio-economic security", "label": "Social justice" }, "scope": "collective", "formality": "informal" }
+      ],
+      "nextStep": null,
+      "isEnding": true,
+      "isWin": false
+    },
+    {
+      "key": "6A",
+      "step": 6,
+      "consequenceText": "Confirming Joris's secure footing and durable supports completes both goals: he has reached a genuine ending in which he participates fully, and along the way the work has touched all four conditions and all four values. He is empowered, included, connected, and his place is structurally secure.",
+      "interventions": [
+        { "aspect": { "kind": "value", "condition": "Social empowerment", "label": "Human dignity" }, "scope": "individual", "formality": "formal" },
+        { "aspect": { "kind": "condition", "condition": "Social empowerment", "label": "Social empowerment" }, "scope": "collective", "formality": "formal" }
+      ],
+      "nextStep": null,
+      "isEnding": true,
+      "isWin": true
+    },
+    {
+      "key": "6B",
+      "step": 6,
+      "consequenceText": "Walking away without securing the supports leaves Joris's progress fragile. The case looks finished on paper, but nothing guarantees his gains will survive the next setback.",
+      "interventions": [
+        { "aspect": { "kind": "condition", "condition": "Social empowerment", "label": "Social empowerment" }, "scope": "individual", "formality": "informal" }
+      ],
+      "nextStep": null,
+      "isEnding": true,
+      "isWin": false
+    }
   ]
 }
