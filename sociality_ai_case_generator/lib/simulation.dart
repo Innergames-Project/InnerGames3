@@ -69,7 +69,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HelpScreen()),
+                MaterialPageRoute(
+                  builder: (context) => const SimulationHelpPage(),
+                ),
               );
             },
             child: Container(
@@ -311,18 +313,15 @@ class _QuizScreenState extends State<QuizScreen> {
 
                   SizedBox(
                     width: double.infinity,
+                    height: 64,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFE82B91),
+                        backgroundColor: const Color(0xFFE02D91),
                         foregroundColor: Colors.white,
-                        elevation: 6,
-                        shadowColor: Colors.black.withOpacity(0.7),
+                        elevation: 5,
+                        shadowColor: const Color(0x55000000),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          vertical: 14,
-                          horizontal: 24,
+                          borderRadius: BorderRadius.circular(20),
                         ),
                       ),
                       onPressed: answers[currentQuestion] != null
@@ -334,7 +333,7 @@ class _QuizScreenState extends State<QuizScreen> {
                             : 'Next',
                         style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
@@ -405,9 +404,65 @@ class ResultScreen extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: answers.length,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text('Question ${index + 1}'),
-                        subtitle: Text('Answer: ${answers[index] ?? "None"}'),
+                      final letters = ['A', 'B', 'C'];
+
+                      return Container(
+                        margin: const EdgeInsets.only(bottom: 12),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: const Color(0xFFA5B800),
+                            width: 2,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.15),
+                              blurRadius: 6,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: const Color(0xFFA5B800),
+                              child: Text(
+                                '${index + 1}',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Question ${index + 1}',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    answers[index] != null
+                                        ? 'Answer: ${letters[answers[index]!]}'
+                                        : 'No answer selected',
+                                    style: TextStyle(
+                                      color: Colors.grey[600],
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       );
                     },
                   ),
@@ -416,17 +471,17 @@ class ResultScreen extends StatelessWidget {
                 SizedBox(height: 16),
 
                 SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
+                    width: double.infinity,
+                    height: 64,
+                    child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFFE82B91),
+                      backgroundColor: const Color(0xFFE02D91),
                       foregroundColor: Colors.white,
-                      elevation: 6,
-                      shadowColor: Colors.black.withOpacity(0.7),
+                      elevation: 5,
+                      shadowColor: const Color(0x55000000),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 14),
                     ),
                     onPressed: () {
                       Navigator.pushAndRemoveUntil(
@@ -439,7 +494,7 @@ class ResultScreen extends StatelessWidget {
                       'Play again',
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
@@ -449,26 +504,32 @@ class ResultScreen extends StatelessWidget {
 
                 SizedBox(
                   width: double.infinity,
+                  height: 64,
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: Color(0xFFE82B91),
-                      side: BorderSide(color: Color(0xFFE82B91)),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                      backgroundColor: Colors.white,
+                      foregroundColor: const Color(0xFFE02D91),
+                      side: const BorderSide(
+                        color: Color(0xFFE02D91),
+                        width: 2,
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const CaseSimulationPage()),
+                        MaterialPageRoute(
+                          builder: (context) => const CaseSimulationPage(),
+                        ),
                       );
                     },
-                    child: Text(
+                    child: const Text(
                       'Dashboard',
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
@@ -593,16 +654,16 @@ class StartScreen extends StatelessWidget {
 
                   SizedBox(
                     width: double.infinity,
+                    height: 64,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFE82B91),
+                        backgroundColor: const Color(0xFFE02D91),
                         foregroundColor: Colors.white,
-                        elevation: 6,
-                        shadowColor: Colors.black.withOpacity(0.7),
+                        elevation: 5,
+                        shadowColor: const Color(0x55000000),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        padding: EdgeInsets.symmetric(vertical: 14),
                       ),
                       onPressed: () {
                         Navigator.push(
@@ -612,8 +673,10 @@ class StartScreen extends StatelessWidget {
                       },
                       child: Text(
                         'Start Simulation',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ),
@@ -626,6 +689,199 @@ class StartScreen extends StatelessWidget {
     );
   }
 }
+
+
+
+class _HowItWorksCard extends StatelessWidget {
+  const _HowItWorksCard({
+    required this.number,
+    required this.title,
+    required this.description,
+    required this.icon,
+  });
+
+  final String number;
+  final String title;
+  final String description;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+      decoration: BoxDecoration(
+        color: const Color(0xFFD7DCB1),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x2A000000),
+            blurRadius: 4,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Center(child: Icon(icon, color: Colors.white, size: 18)),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '$number. $title',
+                  style: const TextStyle(
+                    color: Color(0xFF101010),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                    height: 1.1,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  description,
+                  style: const TextStyle(
+                    color: Color(0xFF555555),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w400,
+                    height: 1.3,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+
+class SimulationHelpPage extends StatelessWidget {
+  const SimulationHelpPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/app-background.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+          SafeArea(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Colors.white),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFE6E6E6),
+                      borderRadius: BorderRadius.circular(36),
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          'How it works',
+                          style: TextStyle(
+                            fontSize: 36,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFFE02D91),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        const SizedBox(height: 24),
+                        _HowItWorksCard(
+                          number: '1',
+                          title: 'Upload Your Document',
+                          description:
+                              'Upload your case study or educational material in PDF, DOCX, or TXT format. Select your preferred language (Dutch or English).',
+                          icon: Icons.cloud_upload_outlined,
+                        ),
+                        const SizedBox(height: 12),
+                        _HowItWorksCard(
+                          number: '2',
+                          title: 'AI Generates Your Case',
+                          description:
+                              'Our AI analyzes your document and automatically creates structured, game-based learning content following a proven six-step pedagogical model.',
+                          icon: Icons.auto_awesome,
+                        ),
+                        const SizedBox(height: 12),
+                        _HowItWorksCard(
+                          number: '3',
+                          title: 'Review & Download',
+                          description:
+                              'Review the generated content, make any edits you need, and download your case for immediate use in your educational programs.',
+                          icon: Icons.download_outlined,
+                        ),
+                        const SizedBox(height: 24),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 56,
+                          child: ElevatedButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFFE02D91),
+                              foregroundColor: Colors.white,
+                              elevation: 4,
+                              shadowColor: const Color(0x45000000),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                            ),
+                            child: const Text(
+                              'Got it!',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
 
 Widget buildTag(String text) {
   return Container(
