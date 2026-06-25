@@ -9,6 +9,7 @@ import '../services/pdf_export_service.dart';
 import '../widgets/how_it_works_overlay.dart';
 import '../widgets/language_selector.dart';
 import 'download_success_page.dart';
+import '../simulation.dart';
 
 class CaseSimulationPage extends StatefulWidget {
   const CaseSimulationPage({super.key, required this.generatedCase});
@@ -53,7 +54,9 @@ class _CaseSimulationPageState extends State<CaseSimulationPage> {
       );
       if (!mounted) return;
       await Navigator.of(context).push(
-        MaterialPageRoute<void>(builder: (_) => const DownloadSuccessPage()),
+        MaterialPageRoute<void>(
+          builder: (_) => DownloadSuccessPage(steps: _steps),
+        ),
       );
     } finally {
       if (mounted) setState(() => _isExporting = false);
@@ -259,7 +262,14 @@ class _CaseSimulationPageState extends State<CaseSimulationPage> {
                             SizedBox(
                               height: 60,
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          QuizScreen(steps: _steps),
+                                    ),
+                                  );
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xFFE02D91),
                                   foregroundColor: Colors.white,

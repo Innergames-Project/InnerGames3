@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
+import 'models/app_language.dart';
+import 'models/generated_case.dart';
+import 'models/language_scope.dart';
+import 'screens/home_page.dart';
+import 'widgets/language_selector.dart';
 
 
 void main() {
@@ -30,14 +35,21 @@ Widget buildBackground({required Widget child}) {
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool showBack;
+  final AppLanguage language;
 
-  const CustomAppBar({super.key, required this.title, this.showBack = false});
+  const CustomAppBar({
+    super.key,
+    required this.title,
+    required this.language,
+    this.showBack = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
+      toolbarHeight: 70,
       iconTheme: IconThemeData(color: Colors.white),
       actionsIconTheme: IconThemeData(color: Colors.white),
 
@@ -63,37 +75,45 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       titleSpacing: 0,
 
       actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 24),
-          child: InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SimulationHelpPage(),
-                ),
-              );
-            },
-            child: Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.white),
+        InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const SimulationHelpPage(),
               ),
-              child: Icon(Icons.question_mark, color: Colors.white),
+            );
+          },
+          child: Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white),
             ),
+            child: Icon(Icons.question_mark, color: Colors.white),
           ),
         ),
+        const SizedBox(width: 10),
+        SizedBox(
+          width: 156,
+          child: LanguageSelector(
+            selectedLanguage: language,
+            onLanguageChanged: (lang) =>
+                LanguageScope.notifierOf(context).value = lang,
+          ),
+        ),
+        const SizedBox(width: 16),
       ],
     );
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(70);
 }
 
 class QuizScreen extends StatefulWidget {
-  const QuizScreen({super.key});
+  final List<GeneratedCaseStep>? steps;
+  const QuizScreen({super.key, this.steps});
 
   @override
   _QuizScreenState createState() => _QuizScreenState();
@@ -102,8 +122,13 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> {
   int currentQuestion = 0;
   late List<int?> answers;
+  late List<Map<String, dynamic>> _questions;
+  late List<String> _subtitles;
 
-  final List<Map<String, dynamic>> questions = [
+  static const String _demoSubtitle =
+      "You receive a call from Anna, a 22-year-old daughter concerned about her mother Maria (45). Anna reports that her mother has been missing medical appointments, neglecting household tasks, and showing signs of depression. Anna is worried but unsure how to help. This is your first interaction with the family.";
+
+  static const List<Map<String, dynamic>> _demoQuestions = [
     {
       'question': 'Initial Contact',
       'options': [
@@ -157,28 +182,44 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   void initState() {
     super.initState();
-    answers = List.filled(questions.length, null);
+    if (widget.steps != null) {
+      _questions = widget.steps!
+          .map((s) => <String, dynamic>{
+                'question': s.title,
+                'options': s.details.map((d) => d.body).toList(),
+              })
+          .toList();
+      _subtitles = widget.steps!.map((s) => s.subtitle).toList();
+    } else {
+      _questions = List.of(_demoQuestions);
+      _subtitles = List.filled(_demoQuestions.length, _demoSubtitle);
+    }
+    answers = List.filled(_questions.length, null);
   }
 
   void nextQuestion() {
-    if (currentQuestion < questions.length - 1) {
+    if (currentQuestion < _questions.length - 1) {
       setState(() => currentQuestion++);
     } else {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => ResultScreen(answers: answers)),
+        MaterialPageRoute(
+          builder: (context) =>
+              ResultScreen(answers: answers, steps: widget.steps),
+        ),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    var q = questions[currentQuestion];
+    final language = LanguageScope.of(context);
+    var q = _questions[currentQuestion];
 
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.transparent,
-      appBar: CustomAppBar(title: '', showBack: true),
+      appBar: CustomAppBar(title: '', showBack: true, language: language),
 
       body: buildBackground(
         child: SafeArea(
@@ -188,7 +229,7 @@ class _QuizScreenState extends State<QuizScreen> {
             height: double.infinity,
             padding: EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.95),
+              color: Colors.white.withValues(alpha: 0.95),
               borderRadius: BorderRadius.circular(16),
             ),
             child: SingleChildScrollView(
@@ -226,7 +267,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   SizedBox(height: 20),
 
                   Text(
-                    "You receive a call from Anna, a 22-year-old daughter concerned about her mother Maria (45). Anna reports that her mother has been missing medical appointments, neglecting household tasks, and showing signs of depression. Anna is worried but unsure how to help. This is your first interaction with the family.",
+                    _subtitles[currentQuestion],
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.grey[600]),
                   ),
@@ -248,7 +289,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   SizedBox(height: 20),
 
                   ...List.generate(q['options'].length, (i) {
-                    final letters = ['A', 'B', 'C'];
+                    final letters = ['A', 'B', 'C', 'D', 'E'];
 
                     final isSelected = answers[currentQuestion] == i;
 
@@ -267,7 +308,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         ),
                         decoration: BoxDecoration(
                           color: isSelected
-                              ? Color(0xFFA5B800).withOpacity(0.15)
+                              ? Color(0xFFA5B800).withValues(alpha: 0.15)
                               : Colors.white,
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
@@ -278,7 +319,7 @@ class _QuizScreenState extends State<QuizScreen> {
                               ? []
                               : [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.25),
+                                    color: Colors.black.withValues(alpha: 0.25),
                                     blurRadius: 6,
                                     offset: Offset(0, 3),
                                   ),
@@ -328,7 +369,7 @@ class _QuizScreenState extends State<QuizScreen> {
                           ? nextQuestion
                           : null,
                       child: Text(
-                        currentQuestion == questions.length - 1
+                        currentQuestion == _questions.length - 1
                             ? 'Complete simulation'
                             : 'Next',
                         style: TextStyle(
@@ -342,7 +383,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   SizedBox(height: 10),
 
                   Text(
-                    '${currentQuestion + 1}/6',
+                    '${currentQuestion + 1}/${_questions.length}',
                     style: TextStyle(
                       color: const Color.fromARGB(255, 42, 42, 42),
                       fontSize: 14,
@@ -360,15 +401,17 @@ class _QuizScreenState extends State<QuizScreen> {
 
 class ResultScreen extends StatelessWidget {
   final List<int?> answers;
+  final List<GeneratedCaseStep>? steps;
 
-  const ResultScreen({super.key, required this.answers});
+  const ResultScreen({super.key, required this.answers, this.steps});
 
   @override
   Widget build(BuildContext context) {
+    final language = LanguageScope.of(context);
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.transparent,
-      appBar: CustomAppBar(title: '', showBack: true),
+      appBar: CustomAppBar(title: '', showBack: true, language: language),
       body: buildBackground(
         child: SafeArea(
           bottom: false,
@@ -377,7 +420,7 @@ class ResultScreen extends StatelessWidget {
             height: double.infinity,
             padding: EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.95),
+              color: Colors.white.withValues(alpha: 0.95),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Column(
@@ -418,7 +461,7 @@ class ResultScreen extends StatelessWidget {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.15),
+                              color: Colors.black.withValues(alpha: 0.15),
                               blurRadius: 6,
                               offset: const Offset(0, 3),
                             ),
@@ -442,7 +485,9 @@ class ResultScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Question ${index + 1}',
+                                    steps != null
+                                        ? steps![index].title
+                                        : 'Question ${index + 1}',
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700,
@@ -486,7 +531,9 @@ class ResultScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => QuizScreen()),
+                        MaterialPageRoute(
+                          builder: (context) => QuizScreen(steps: steps),
+                        ),
                         (route) => false,
                       );
                     },
@@ -521,7 +568,7 @@ class ResultScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const CaseSimulationPage(),
+                          builder: (context) => CaseGeneratorHomePage(),
                         ),
                       );
                     },
@@ -551,7 +598,7 @@ class StartScreen extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.transparent,
-      appBar: CustomAppBar(title: ''),
+      appBar: CustomAppBar(title: '', language: LanguageScope.of(context)),
       body: buildBackground(
         child: SafeArea(
           child: Center(
@@ -561,7 +608,7 @@ class StartScreen extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 24),
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.95),
+                color: Colors.white.withValues(alpha: 0.95),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
@@ -891,7 +938,7 @@ Widget buildTag(String text) {
       borderRadius: BorderRadius.circular(12),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.25),
+          color: Colors.black.withValues(alpha: 0.25),
           blurRadius: 6,
           offset: Offset(0, 3),
         ),

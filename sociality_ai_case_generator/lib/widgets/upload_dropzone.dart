@@ -144,9 +144,15 @@ class UploadDropzone extends StatelessWidget {
                               size: 16,
                               color: const Color(0xFFE62994),
                             ),
-                            label: Text(
-                              selectedEvidence[i].displayName,
-                              style: const TextStyle(fontSize: 12),
+                            label: ConstrainedBox(
+                              constraints:
+                                  const BoxConstraints(maxWidth: 150),
+                              child: Text(
+                                selectedEvidence[i].displayName,
+                                style: const TextStyle(fontSize: 12),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
                             ),
                             backgroundColor: Colors.white,
                             side: const BorderSide(color: Color(0xFFD1D1D1)),
@@ -168,13 +174,16 @@ class UploadDropzone extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          tapToAddLabel,
-                          style:
-                              Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: const Color(0xFF7B7B7B),
-                                fontSize: 12,
-                              ),
+                        Flexible(
+                          child: Text(
+                            tapToAddLabel,
+                            style:
+                                Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  color: const Color(0xFF7B7B7B),
+                                  fontSize: 12,
+                                ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                         if (onClearAll != null) ...[
                           const SizedBox(width: 12),

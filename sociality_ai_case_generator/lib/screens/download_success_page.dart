@@ -3,13 +3,16 @@ import 'dart:math';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 
+import '../models/generated_case.dart';
 import '../models/home_copy.dart';
 import '../models/language_scope.dart';
+import '../simulation.dart';
 import '../widgets/how_it_works_overlay.dart';
 import '../widgets/language_selector.dart';
 
 class DownloadSuccessPage extends StatefulWidget {
-  const DownloadSuccessPage({super.key});
+  final List<GeneratedCaseStep>? steps;
+  const DownloadSuccessPage({super.key, this.steps});
 
   @override
   State<DownloadSuccessPage> createState() => _DownloadSuccessPageState();
@@ -240,8 +243,15 @@ class _DownloadSuccessPageState extends State<DownloadSuccessPage> {
                                     width: double.infinity,
                                     height: 58,
                                     child: ElevatedButton(
-                                      onPressed: () =>
-                                          Navigator.of(context).pop(),
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (_) => QuizScreen(
+                                              steps: widget.steps,
+                                            ),
+                                          ),
+                                        );
+                                      },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor:
                                             const Color(0xFFE02D91),
